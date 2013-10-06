@@ -8,6 +8,7 @@ var casper = require("casper").create({
 // define test user email
 var i = casper.cli.get(0);
 var url = casper.cli.get(1);
+
 var ts = new Date().getTime();
 var email = "user_" + i  + "_" + ts + "@loadtest.com";
 
@@ -63,20 +64,15 @@ casper.waitForSelector(".pp-feed-small", function() {
   });
 });
 
-// read one article
-casper.waitForSelector(".pp-article-content", function() {
-  this.wait(3000, function() {
-    //this.capture("steps/" + i + "_step6.png");
-    this.click(".pp-article-content");
+// read one article with 5 pages
+for(var j=0; j<5; j++) {
+  casper.waitForSelector(".pp-article-content", function() {
+    this.wait(3000, function() {
+      //this.capture("steps/" + i + "_step6.png");
+      this.click(".pp-article-content");
+    });
   });
-});
-
-casper.waitForSelector(".pp-article-content", function() {
-  this.wait(3000, function() {
-    //this.capture("steps/" + i + "_step7.png");
-    this.click(".pp-article-content");
-  });
-});
+}
 
 // next articles page
 casper.waitForSelector(".pp-articles", function() {
